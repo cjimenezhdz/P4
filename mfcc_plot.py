@@ -14,8 +14,11 @@ for linea in lineas:
 
 fdatos.close()
 
-
 plt.figure(figsize=(10,7))
 plt.plot(x_datos,y_datos,'o',markersize=2)
-plt.title('Coeficientes MFCC')
+
+plt.title('Coefficients MFCC', fontsize=16, fontweight="bold")
+plt.xlabel('Coefficients 2')
+plt.ylabel('Coefficients 3')
+
 plt.show()

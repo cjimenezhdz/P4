@@ -74,7 +74,7 @@ ejercicios indicados.
 - Escriba el *pipeline* principal usado para calcular los coeficientes cepstrales de predicción lineal
   (LPCC) en su fichero <code>scripts/wav2lpcc.sh</code>:
 
-  - En el caso del LPC2C transformamos los LPC a coeficientes cepstrales. 
+    > En el caso del LPC2C transformamos los LPC a coeficientes cepstrales. 
 
   ```sh
        # Main command for feature extration:
@@ -84,7 +84,7 @@ ejercicios indicados.
 - Escriba el *pipeline* principal usado para calcular los coeficientes cepstrales en escala Mel (MFCC) en su
   fichero <code>scripts/wav2mfcc.sh</code>:
 
-  - En este caso analizamos el MFCC. 
+    > En este caso analizamos el MFCC. 
 
   ```sh
        # Main command for feature extration:
@@ -95,6 +95,19 @@ ejercicios indicados.
 
 - Inserte una imagen mostrando la dependencia entre los coeficientes 2 y 3 de las tres parametrizaciones
   para todas las señales de un locutor.
+
+  > Primero, vamos a representar las dependencias de las tres parametrizaciones por separado para observar las dependencias más detalladamente:
+
+  <img src="img/lp_coef.png" width="640" align="center">
+
+  <img src="img/lpcc_coef.png" width="640" align="center">
+
+  <img src="img/mfcc_coef.png" width="640" align="center">
+
+  > A continuación, representamos las dependencias de las tres parametrizaciones conjuntamente para ver las diferencias:
+
+  <img src="img/coef.png" width="640" align="center">
+
   
   + Indique **todas** las órdenes necesarias para obtener las gráficas a partir de las señales 
     parametrizadas.
