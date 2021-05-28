@@ -47,6 +47,21 @@ ejercicios indicados.
 - Explique el procedimiento seguido para obtener un fichero de formato *fmatrix* a partir de los ficheros de
   salida de SPTK (líneas 45 a 47 del script `wav2lp.sh`).
 
+  ```sh
+       # Our array files need a header with the number of cols and rows:
+        ncol=$((lpc_order+1)) # lpc p =>  (gain a1 a2 ... ap) 
+        nrow=`$X2X +fa < $base.lp | wc -l | perl -ne 'print $_/'$ncol', "\n";'`
+     ```
+
+  
+  > Primero extraemos las caracteristicas necesarias de la señal de entrada, a partir de los comandos comentados anteriormente:
+  
+  El fichero *fmatrix* esta compuesto por número de filas y de columnas seguidos por los datos.
+  
+  El numero de columnas es igual al número de coeficientes, calculado como *lp_order +1*; en el primer elemento del vector es donde se almacena la ganancia de predicción.
+  
+  El número de filas es igual al número de tramas. Este número depende de las caractericas de la señal de entrada, por lo tanto tenemos que parametrizar la señal para convertirla en texto, usando *+fa*, y contando el número de líneas, con el comando de *UNIX wc -l*.
+
   * ¿Por qué es conveniente usar este formato (u otro parecido)? Tenga en cuenta cuál es el formato de
     entrada y cuál es el de resultado.
 
