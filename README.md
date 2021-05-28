@@ -71,12 +71,25 @@ ejercicios indicados.
 
     > De esta forma podremos ver a la salida el valor de los coeficientes en cada trama, siendo cada columna el valor de cada coeficiente y cada fila el número de trama. Por lo tanto, a partir de este formato matriz es mucho más fácil acceder, observar y extraer los datos de la trama.
 
-
 - Escriba el *pipeline* principal usado para calcular los coeficientes cepstrales de predicción lineal
   (LPCC) en su fichero <code>scripts/wav2lpcc.sh</code>:
 
+  - En el caso del LPC2C transformamos los LPC a coeficientes cepstrales. 
+
+  ```sh
+       # Main command for feature extration:
+        sox $inputfile -t raw -e signed -b 16 - | $X2X +sf | $FRAME -l 240 -p 80 | $WINDOW -l 240 -L 240 | $LPC -l 240 -m $lpc_order | $LPC2C -m $lpc_order -M $nceps > $base.lpcc
+     ```
+
 - Escriba el *pipeline* principal usado para calcular los coeficientes cepstrales en escala Mel (MFCC) en su
   fichero <code>scripts/wav2mfcc.sh</code>:
+
+  - En este caso analizamos el MFCC. 
+
+  ```sh
+       # Main command for feature extration:
+        sox $inputfile -t raw -e signed -b 16 - | $X2X +sf | $FRAME -l 240 -p 80 | $MFCC -s 8000 -n $ncoef -l 240 -m $mfcc_order > $base.mfcc
+     ```
 
 ### Extracción de características.
 
