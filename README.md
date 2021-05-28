@@ -69,6 +69,9 @@ ejercicios indicados.
   * ¿Por qué es conveniente usar este formato (u otro parecido)? Tenga en cuenta cuál es el formato de
     entrada y cuál es el de resultado.
 
+    > De esta forma podremos ver a la salida el valor de los coeficientes en cada trama, siendo cada columna el valor de cada coeficiente y cada fila el número de trama. Por lo tanto, a partir de este formato matriz es mucho más fácil acceder, observar y extraer los datos de la trama.
+
+
 - Escriba el *pipeline* principal usado para calcular los coeficientes cepstrales de predicción lineal
   (LPCC) en su fichero <code>scripts/wav2lpcc.sh</code>:
 
