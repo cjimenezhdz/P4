@@ -4,13 +4,13 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 fdatos = open('lp_2_3.txt', 'r')
-x_datos = []                #  Creamos una lista para la primera columna
-y_datos = []                #  Creamos una lista para la segunda columna
-lineas = fdatos.readlines() # Leemos el fichero línea a línea
+x_datos = []                
+y_datos = []               
+lineas = fdatos.readlines() 
 for linea in lineas:
-    x, y = linea.split()     # Se separa cada línea en dos columnas
-    x_datos.append(float(x)) # Añado el elemento x a la lista x_datos
-    y_datos.append(float(y)) # Añado el elemento y a la lista y_datos
+    x, y = linea.split()     
+    x_datos.append(float(x)) 
+    y_datos.append(float(y)) 
 
 fdatos.close()
 
