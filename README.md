@@ -32,23 +32,82 @@ ejercicios indicados.
 - Analice el script `wav2lp.sh` y explique la misión de los distintos comandos involucrados en el *pipeline*
   principal (`sox`, `$X2X`, `$FRAME`, `$WINDOW` y `$LPC`). Explique el significado de cada una de las 
   opciones empleadas y de sus valores.
+    - sox: con este comando convertimos la señal de entrada a un formato contreto de 'b' bits. Podemos elegir como queremos la señal de entrada, es decir, si queremos añadir o no la cabecera, el formato de la señal o los bits utilizados. 
+
+    - $X2X: esta opción representa el programa SPTK con el que relizamos la conversión entre los distintos formatos de datos.
+     ```py
+       x2x [+type1][+type2][-r][-o][%format]
+     ```
+    - FRAME: con este comando dividimos la señal de entrada en tramas de '-l' muestras con desprazamiento de ventana de '-p' muestras. Podemos escoger si queremos el punto de comienzo centrado.
+
+    - WINDOW: con este comando multiplicamos cada trama por una ventana. Podemos escoge el numero de '-L' muestras por trama, el tipo de normalización y el tipo de ventana a utilzar.
+
+    - LPC: con este comando calculamos los coeficientes de predicción lineal, 'lpc_order'. Podemos escoger el numero de '-l' tramas, el orden el LPC (-m), y el valor minimo del determinante de la matriz normal. 
 
 - Explique el procedimiento seguido para obtener un fichero de formato *fmatrix* a partir de los ficheros de
   salida de SPTK (líneas 45 a 47 del script `wav2lp.sh`).
+  
+  > Primero extraemos las caracteristicas necesarias de la señal de entrada, a partir de los comandos comentados anteriormente:
+
+  ```sh
+       # Main command for feature extration
+          sox $inputfile -t raw -e signed -b 16 - | $X2X +sf | $FRAME -l 240 -p 80 | $WINDOW -l 240 -L 240 | $LPC -l 240 -m $lpc_order > $base.lp
+     ```
+  
+  > El fichero *fmatrix* esta compuesto por número de filas y de columnas seguidos por los datos.
+  
+  >El numero de columnas es igual al número de coeficientes, calculado como *lp_order +1*; en el primer elemento del vector es donde se almacena la ganancia de predicción.
+  
+  >El número de filas es igual al número de tramas. Este número depende de las caractericas de la señal de entrada, por lo tanto tenemos que parametrizar la señal para convertirla en texto, usando *+fa*, y contando el número de líneas, con el comando de *UNIX wc -l*.
+
+  ```sh
+       # Our array files need a header with the number of cols and rows:
+        ncol=$((lpc_order+1)) # lpc p =>  (gain a1 a2 ... ap) 
+        nrow=`$X2X +fa < $base.lp | wc -l | perl -ne 'print $_/'$ncol', "\n";'`
+     ```
 
   * ¿Por qué es conveniente usar este formato (u otro parecido)? Tenga en cuenta cuál es el formato de
     entrada y cuál es el de resultado.
 
+    > De esta forma podremos ver a la salida el valor de los coeficientes en cada trama, siendo cada columna el valor de cada coeficiente y cada fila el número de trama. Por lo tanto, a partir de este formato matriz es mucho más fácil acceder, observar y extraer los datos de la trama.
+
 - Escriba el *pipeline* principal usado para calcular los coeficientes cepstrales de predicción lineal
   (LPCC) en su fichero <code>scripts/wav2lpcc.sh</code>:
 
+    > En el caso del LPC2C transformamos los LPC a coeficientes cepstrales. 
+
+  ```sh
+       # Main command for feature extration:
+        sox $inputfile -t raw -e signed -b 16 - | $X2X +sf | $FRAME -l 240 -p 80 | $WINDOW -l 240 -L 240 | $LPC -l 240 -m $lpc_order | $LPC2C -m $lpc_order -M $nceps > $base.lpcc
+     ```
+
 - Escriba el *pipeline* principal usado para calcular los coeficientes cepstrales en escala Mel (MFCC) en su
   fichero <code>scripts/wav2mfcc.sh</code>:
+
+    > En este caso analizamos el MFCC. 
+
+  ```sh
+       # Main command for feature extration:
+        sox $inputfile -t raw -e signed -b 16 - | $X2X +sf | $FRAME -l 240 -p 80 | $MFCC -s 8000 -n $ncoef -l 240 -m $mfcc_order > $base.mfcc
+     ```
 
 ### Extracción de características.
 
 - Inserte una imagen mostrando la dependencia entre los coeficientes 2 y 3 de las tres parametrizaciones
   para todas las señales de un locutor.
+
+  > Primero, vamos a representar las dependencias de las tres parametrizaciones por separado para observar las dependencias más detalladamente:
+
+  <img src="img/lp_coef.png" width="640" align="center">
+
+  <img src="img/lpcc_coef.png" width="640" align="center">
+
+  <img src="img/mfcc_coef.png" width="640" align="center">
+
+  > A continuación, representamos las dependencias de las tres parametrizaciones conjuntamente para ver las diferencias:
+
+  <img src="img/coef.png" width="640" align="center">
+
   
   + Indique **todas** las órdenes necesarias para obtener las gráficas a partir de las señales 
     parametrizadas.
