@@ -185,9 +185,7 @@ Complete el código necesario para realizar reconociminto del locutor y optimice
   |            | LP       | LPCC     | MFCC       |
   |------------|:--------:|:--------:|:----------:|
   | nerr       |    86    |    17    |      5     |
-  |------------|:--------:|:--------:|:----------:|
   | ntot       |   785    |   785    |    785     |
-  |------------|:--------:|:--------:|:----------:|
   | error_rate |  10.96%  |   2.17%  |    0.64%   |
 
   <img src="img/reconocimiento.png" width="640" align="center">
