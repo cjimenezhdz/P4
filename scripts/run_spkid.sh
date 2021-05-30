@@ -165,7 +165,7 @@ for cmd in $*; do
 	   #
 	   # - The name of the world model will be used by gmm_verify in the 'verify' command below.
        #echo "Implement the trainworld option ..."
-       gmm_train -v 1 -T 0.001 -N10 -m 70 -d $w/$FEAT -e $FEAT -g $w/gmm/$FEAT/$world.gmm $lists/verif/$world.train || exit 1
+       gmm_train -v 1 -T 0.0001 -N50 -m 70 -d $w/$FEAT -e $FEAT -g $w/gmm/$FEAT/$world.gmm $lists/verif/$world.train || exit 1
    elif [[ $cmd == verify ]]; then
        ## @file
 	   # \TODO 
@@ -208,7 +208,7 @@ for cmd in $*; do
         (gmm_verify -d  $w/$FEAT -e $FEAT -D $w/gmm/$FEAT -E gmm $lists/gmm.list -w $world $lists/final/verif.test $lists/final/verif.test.candidates |
            tee $w/final_verif_${FEAT}_${name_exp}.log) || exit 1
         perl -ane 'print "$F[0]\t$F[1]\t";
-           if ($F[2] >  (PONER EL UMBRAL OPTIMO QUE NOS DAN AL EJECUTAR -> THR)) {print "1\n"}
+           if ($F[2] > 0.582870593884598) {print "1\n"}
            else {print "0\n"}' $w/final_verif_${FEAT}_${name_exp}.log | tee verif_test.log
    
    # If the command is not recognize, check if it is the name
