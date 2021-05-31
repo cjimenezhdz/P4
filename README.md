@@ -108,7 +108,8 @@ ejercicios indicados.
   <code>fmatrix_show work/lpcc/BLOCK17/SES177/*.lpcc | egrep '^[' | cut -f3,4 > lpcc_2_3.txt</code>
 
   <img src="img/lpcc_coef.png" width="640" align="center">
-    ```sh
+    
+  ```sh
         fmatrix_show work/mfcc/BLOCK17/SES177/*.mfcc | egrep '^[' | cut -f3,4 > mfcc_2_3.txt</code>
     ```
 

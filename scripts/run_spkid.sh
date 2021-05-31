@@ -88,6 +88,9 @@ fi
 # - Select (or change) different features, options, etc. Make you best choice and try several options.
 
 compute_lp() {
+    db=$1
+    shift
+    listas=$*
     for filename in $(cat $lists/class/all.train $lists/class/all.test); do
         mkdir -p `dirname $w/$FEAT/$filename.$FEAT`
         EXEC="wav2lp 8 $db/$filename.wav $w/$FEAT/$filename.$FEAT"
@@ -97,6 +100,9 @@ compute_lp() {
 
 # compute_lpcc
 compute_lpcc() {
+    db=$1
+    shift
+    listas=$*
     for filename in $(cat $lists/class/all.train $lists/class/all.test); do
         mkdir -p `dirname $w/$FEAT/$filename.$FEAT`
         EXEC="wav2lpcc 50 35 $db/$filename.wav $w/$FEAT/$filename.$FEAT"
@@ -106,6 +112,9 @@ compute_lpcc() {
 
 # compute_mfcc
 compute_mfcc() {
+    db=$1
+    shift
+    listas=$*
     for filename in $(cat $lists/class/all.train $lists/class/all.test); do
         mkdir -p `dirname $w/$FEAT/$filename.$FEAT`
         EXEC="wav2mfcc 25 35 $db/$filename.wav $w/$FEAT/$filename.$FEAT"
